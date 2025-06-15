@@ -1,6 +1,6 @@
 
 /*
-LeetCode 3rd Session
+LeetCode 4th Session
 Created 2025-06-12 by PiotrUr
 */
 
@@ -54,37 +54,26 @@ FROM
 https://leetcode.com/problems/game-play-analysis-iv/description/
 */
 
--- NOT FINISHED --
-
-/*
--- First login date per user
-WITH first_login AS (
-    SELECT MIN(event_date) as first_log_date
+WITH FirstLogins AS (
+    SELECT
+        player_id,
+        MIN(event_date) AS first_login_date
     FROM Activity
-    GROUP BY player_id)
-SELECT *, first_login
-FROM
-    Activity
-
--- Count of all players
-SELECT
-    DISTINCT COUNT (player_id)
-FROM
-    Activity
-
--- Consecutive day count
-WITH consecutive_days AS (
-    SELECT player_id,
-        
+    GROUP BY player_id
+),
+NextDayLogins AS (
+    SELECT
+        a.player_id
+    FROM Activity a
+    INNER JOIN FirstLogins f
+        ON a.player_id = f.player_id
+        AND a.event_date = DATEADD(DAY, 1, f.first_login_date)
 )
 
-SELECT 
-    *, 
-    LAG(event_date,1) OVER (ORDER BY player_id, event_date) AS [previous_date],
-    LAG(player_id,1) OVER (ORDER BY player_id, event_date) AS [previous_player]
-FROM Activity
-WHERE
-    player_id = [previous_player]
---    previous_date = DATEADD(day,1,event_date)
-ORDER BY player_id, event_date
-*/
+SELECT
+    ROUND(
+        CAST(COUNT(DISTINCT n.player_id) AS FLOAT) /
+        (SELECT COUNT(DISTINCT player_id) FROM Activity),
+        2
+    ) AS fraction
+FROM NextDayLogins n;
