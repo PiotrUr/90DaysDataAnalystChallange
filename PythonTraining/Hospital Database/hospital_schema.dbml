@@ -1,0 +1,54 @@
+
+Table patients {
+  patient_id varchar [pk]
+  first_name varchar
+  last_name varchar
+  gender char
+  date_of_birth date
+  contact_number varchar
+  address varchar
+  registration_date date
+  insurance_provider varchar
+  insurance_number varchar
+  email varchar
+}
+
+Table doctors {
+  doctor_id varchar [pk]
+  first_name varchar
+  last_name varchar
+  specialization varchar
+  phone_number varchar
+  years_experience int
+  hospital_branch varchar
+  email varchar
+}
+
+Table appointments {
+  appointment_id varchar [pk]
+  patient_id varchar [ref: > patients.patient_id]
+  doctor_id varchar [ref: > doctors.doctor_id]
+  appointment_date date
+  appointment_time time
+  reason_for_visit varchar
+  status varchar
+}
+
+Table treatments {
+  treatment_id varchar [pk]
+  appointment_id varchar [ref: > appointments.appointment_id]
+  treatment_type varchar
+  description varchar
+  cost float
+  treatment_date date
+}
+
+Table billing {
+  bill_id varchar [pk]
+  patient_id varchar [ref: > patients.patient_id]
+  treatment_id varchar [ref: > treatments.treatment_id]
+  bill_date date
+  amount float
+  payment_method varchar
+  payment_status varchar
+}
