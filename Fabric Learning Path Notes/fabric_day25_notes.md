@@ -2,7 +2,7 @@
 
 ## ✅ Module Completed
 🔹 Get started with data warehouses in Microsoft Fabric  
-🔗 https://learn.microsoft.com/en-us/training/modules/get-started-data-warehouses-fabric/?WT.mc_id=cloudskillschallenge_b696c18d-7201-4aff-9c7d-d33014d93b25
+🔗 https://learn.microsoft.com/en-us/training/modules/get-started-data-warehouse/?WT.mc_id=cloudskillschallenge_b696c18d-7201-4aff-9c7d-d33014d93b25&source=docs
 
 ## 🧠 Key Concepts
 🔹 Fabric Warehouses are cloud-native, scalable, and fully managed data warehouses  

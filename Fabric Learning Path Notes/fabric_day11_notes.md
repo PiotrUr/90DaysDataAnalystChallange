@@ -2,7 +2,7 @@
 # 📘 Microsoft Fabric – Study Notes (Day 11)
 
 ## 🔷 Module: Work with Delta Lake tables in Microsoft Fabric  
-🔗 [Link to module](https://learn.microsoft.com/en-us/training/modules/work-with-delta-lake-tables-microsoft-fabric/)
+🔗 [Link to module](https://learn.microsoft.com/en-us/training/modules/work-delta-lake-tables-fabric/?WT.mc_id=cloudskillschallenge_b696c18d-7201-4aff-9c7d-d33014d93b25&source=docs)
 
 ### 🧠 Key Concepts:
 🔹 **Delta Lake** is an open storage format that brings ACID transactions and schema enforcement to data lakes  
