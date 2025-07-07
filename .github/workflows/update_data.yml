@@ -1,0 +1,35 @@
+name: Update GitHub Repos Weekly
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # every Monday at 6:00 UTC
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run extraction script
+        run: python scripts/extract_github.py
+
+      - name: Commit and push updated DB
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/database.sqlite
+          git commit -m "Update GitHub repo data (automated)"
+          git push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
