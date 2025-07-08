@@ -4,7 +4,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 USERNAME = "PiotrUr"
-DB_PATH = "data/database.sqlite"
+DB_PATH = "PersonalDashboardProject/data/database.sqlite"
 
 # ========== FETCH REPOS ==========
 def fetch_repos(user):

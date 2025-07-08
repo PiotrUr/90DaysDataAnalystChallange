@@ -8,7 +8,7 @@ CLIENT_ID = os.environ.get("STRAVA_CLIENT_ID")
 CLIENT_SECRET = os.environ.get("STRAVA_CLIENT_SECRET")
 REFRESH_TOKEN = os.environ.get("STRAVA_REFRESH_TOKEN")
 
-DB_PATH = "data/database.sqlite"
+DB_PATH = "PersonalDashboardProject/data/database.sqlite"
 
 def refresh_access_token():
     response = requests.post("https://www.strava.com/api/v3/oauth/token", data={
