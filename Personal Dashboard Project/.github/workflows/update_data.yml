@@ -1,35 +1,46 @@
-name: Update GitHub Repos Weekly
+name: Weekly Data Update
 
 on:
   schedule:
-    - cron: '0 6 * * 1'  # every monday at o 6:00 UTC
+    - cron: '0 6 * * 1'  # every Monday at 06:00 UTC
   workflow_dispatch:
 
 jobs:
-  update:
+  update-data:
     runs-on: ubuntu-latest
 
+    env:
+      STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+      STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+      STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+
     steps:
-      - name: Checkout repo
+      - name: ⬇️ Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: 📦 Install dependencies
+        run: pip install -r "Personal Dashboard Project/requirements.txt"
 
-      - name: Run extraction script
-        run: python scripts/extract_github.py
+      - name: 🛠 Run GitHub data extractor
+        run: python "Personal Dashboard Project/scripts/extract_github.py"
 
-      - name: Commit and push updated DB
+      - name: 🏃‍♂️ Run Strava data extractor
+        run: python "Personal Dashboard Project/scripts/extract_strava.py"
+
+      - name: 📤 Commit and push updated database
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add data/database.sqlite
-          git commit -m "Update GitHub repo data (automated)"
-          git push
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          if git diff --quiet "Personal Dashboard Project/data/database.sqlite"; then
+            echo "🟢 No changes in database. Skipping commit."
+          else
+            git add "Personal Dashboard Project/data/database.sqlite"
+            git commit -m "🔄 Weekly DB update: GitHub + Strava (automated)"
+            git push
+          fi
