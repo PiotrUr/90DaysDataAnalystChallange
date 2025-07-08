@@ -13,6 +13,7 @@ jobs:
       STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
       STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
       STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: ⬇️ Checkout repository
@@ -42,5 +43,5 @@ jobs:
           else
             git add "PersonalDashboardProject/data/database.sqlite"
             git commit -m "🔄 Weekly DB update: GitHub + Strava (automated)"
-            git push
+            git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           fi
