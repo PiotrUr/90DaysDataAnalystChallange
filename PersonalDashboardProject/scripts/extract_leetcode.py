@@ -27,33 +27,46 @@ query getUserProfile($username: String!) {
 """
 
 def fetch_leetcode_stats(username):
-    payload = {
-        "operationName": "getUserProfile",
-        "variables": {"username": username},
-        "query": QUERY
+    query = '''
+    query userProfile($username: String!) {
+      allQuestionsCount {
+        difficulty
+        count
+      }
+      matchedUser(username: $username) {
+        submitStatsGlobal {
+          acSubmissionNum {
+            difficulty
+            count
+          }
+        }
+        profile {
+          ranking
+          reputation
+          contributionPoints
+        }
+      }
     }
+    '''
+
+    variables = {"username": username}
+
     headers = {
         "Content-Type": "application/json",
         "Referer": f"https://leetcode.com/{username}/",
         "User-Agent": "Mozilla/5.0"
     }
+
+    payload = {
+        "operationName": "userProfile",
+        "query": query,
+        "variables": variables
+    }
+
     response = requests.post(GRAPHQL_ENDPOINT, json=payload, headers=headers)
+    print("DEBUG Response JSON:", response.text)
     response.raise_for_status()
     return response.json()
-
-def extract_stats(data):
-    profile = data["data"]["matchedUser"]["profile"]
-    subs = data["data"]["matchedUser"]["submitStatsGlobal"]["acSubmissionNum"]
-    stats = {item["difficulty"]: item["count"] for item in subs}
-    return {
-        "ranking": profile["ranking"],
-        "reputation": profile["reputation"],
-        "contributionPoints": profile["contributionPoints"],
-        "totalSolved": stats.get("All", 0),
-        "easySolved": stats.get("Easy", 0),
-        "mediumSolved": stats.get("Medium", 0),
-        "hardSolved": stats.get("Hard", 0),
-    }
 
 def init_db(conn):
     cursor = conn.cursor()
