@@ -79,7 +79,6 @@ def extract_stats(data):
         "hardSolved": stats.get("Hard", 0)
     }
 
-
 def init_db(conn):
     cursor = conn.cursor()
     cursor.execute('''
@@ -91,7 +90,7 @@ def init_db(conn):
             hard_solved INTEGER,
             ranking INTEGER,
             reputation INTEGER
-        )
+        );
     ''')
     conn.commit()
 
