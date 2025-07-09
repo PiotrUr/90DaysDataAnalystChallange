@@ -90,7 +90,7 @@ def init_db(conn):
             medium_solved INTEGER,
             hard_solved INTEGER,
             ranking INTEGER,
-            reputation INTEGER,
+            reputation INTEGER
         )
     ''')
     conn.commit()
