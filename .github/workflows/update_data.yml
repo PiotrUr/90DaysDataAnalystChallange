@@ -33,6 +33,9 @@ jobs:
       - name: 🏃‍♂️ Run Strava data extractor
         run: python "PersonalDashboardProject/scripts/extract_strava.py"
 
+      - name: 🧠 Run LeetCode data extractor
+        run: python "PersonalDashboardProject/scripts/extract_leetcode.py"
+
       - name: 📤 Commit and push updated database
         run: |
           git config user.name "github-actions"
