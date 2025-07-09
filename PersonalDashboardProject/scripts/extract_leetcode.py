@@ -14,7 +14,6 @@ query getUserProfile($username: String!) {
     profile {
       ranking
       reputation
-      contributionPoints
     }
     submitStatsGlobal {
       acSubmissionNum {
@@ -43,7 +42,6 @@ def fetch_leetcode_stats(username):
         profile {
           ranking
           reputation
-          contributionPoints
         }
       }
     }
@@ -79,7 +77,6 @@ def init_db(conn):
             hard_solved INTEGER,
             ranking INTEGER,
             reputation INTEGER,
-            contribution_points INTEGER
         )
     ''')
     conn.commit()
@@ -90,7 +87,7 @@ def save_to_db(conn, stats):
     cursor.execute('''
         INSERT OR REPLACE INTO leetcode_user_stats (
             snapshot_date, total_solved, easy_solved, medium_solved, hard_solved,
-            ranking, reputation, contribution_points
+            ranking, reputation
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         now,
@@ -100,7 +97,6 @@ def save_to_db(conn, stats):
         stats["hardSolved"],
         stats["ranking"],
         stats["reputation"],
-        stats["contributionPoints"]
     ))
     conn.commit()
 
