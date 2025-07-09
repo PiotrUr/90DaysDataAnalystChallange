@@ -66,6 +66,20 @@ def fetch_leetcode_stats(username):
     response.raise_for_status()
     return response.json()
 
+def extract_stats(data):
+    profile = data["data"]["matchedUser"]["profile"]
+    submissions = data["data"]["matchedUser"]["submitStatsGlobal"]["acSubmissionNum"]
+    stats = {item["difficulty"]: item["count"] for item in submissions}
+    return {
+        "ranking": profile.get("ranking"),
+        "reputation": profile.get("reputation"),
+        "totalSolved": stats.get("All", 0),
+        "easySolved": stats.get("Easy", 0),
+        "mediumSolved": stats.get("Medium", 0),
+        "hardSolved": stats.get("Hard", 0)
+    }
+
+
 def init_db(conn):
     cursor = conn.cursor()
     cursor.execute('''
