@@ -99,9 +99,14 @@ def save_to_db(conn, stats):
     now = datetime.utcnow().isoformat()
     cursor.execute('''
         INSERT OR REPLACE INTO leetcode_user_stats (
-            snapshot_date, total_solved, easy_solved, medium_solved, hard_solved,
-            ranking, reputation
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            snapshot_date,
+            total_solved,
+            easy_solved,
+            medium_solved,
+            hard_solved,
+            ranking,
+            reputation
+        ) VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', (
         now,
         stats["totalSolved"],
@@ -109,9 +114,10 @@ def save_to_db(conn, stats):
         stats["mediumSolved"],
         stats["hardSolved"],
         stats["ranking"],
-        stats["reputation"],
+        stats["reputation"]
     ))
     conn.commit()
+
 
 def main():
     print(f"📡 Fetching LeetCode stats for user: {USERNAME}")
