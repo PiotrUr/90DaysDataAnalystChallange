@@ -28,10 +28,16 @@ query getUserProfile($username: String!) {
 
 def fetch_leetcode_stats(username):
     payload = {
-        "query": QUERY,
-        "variables": {"username": username}
+        "operationName": "getUserProfile",
+        "variables": {"username": username},
+        "query": QUERY
     }
-    response = requests.post(GRAPHQL_ENDPOINT, json=payload, headers=HEADERS)
+    headers = {
+        "Content-Type": "application/json",
+        "Referer": f"https://leetcode.com/{username}/",
+        "User-Agent": "Mozilla/5.0"
+    }
+    response = requests.post(GRAPHQL_ENDPOINT, json=payload, headers=headers)
     response.raise_for_status()
     return response.json()
 

@@ -45,6 +45,6 @@ jobs:
             echo "🟢 No changes in database. Skipping commit."
           else
             git add "PersonalDashboardProject/data/database.sqlite"
-            git commit -m "🔄 Weekly DB update: GitHub + Strava (automated)"
+            git commit -m "🔄 Weekly DB update: GitHub, Leetcode and Strava (automated)"
             git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           fi
