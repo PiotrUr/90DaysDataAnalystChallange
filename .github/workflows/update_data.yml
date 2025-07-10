@@ -36,15 +36,21 @@ jobs:
       - name: 🧠 Run LeetCode data extractor
         run: python "PersonalDashboardProject/scripts/extract_leetcode.py"
 
-      - name: 📤 Commit and push updated database
+      - name: 📄 Export SQLite tables to CSV
+        run: |
+          python PersonalDashboardProject/scripts/export_to_csv.py
+
+      - name: 📤 Commit and push updated database and CSVs
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
 
-          if git diff --quiet "PersonalDashboardProject/data/database.sqlite"; then
-            echo "🟢 No changes in database. Skipping commit."
+          git add "PersonalDashboardProject/data/database.sqlite"
+          git add "PersonalDashboardProject/data/csv/*.csv"
+
+          if git diff --cached --quiet; then
+            echo "🟢 No changes in data. Skipping commit."
           else
-            git add "PersonalDashboardProject/data/database.sqlite"
-            git commit -m "🔄 Weekly DB update: GitHub, Leetcode and Strava (automated)"
+            git commit -m "🔄 Weekly DB update + CSV export"
             git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           fi
