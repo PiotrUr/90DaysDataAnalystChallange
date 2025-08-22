@@ -1,6 +1,6 @@
 
 /*
-LeetCode 19th Session
+LeetCode 20th Session
 Created 2025-08-22 by PiotrUr
 */
 
@@ -47,7 +47,7 @@ https://leetcode.com/problems/find-students-who-improved/
 
 WITH FirstScores AS (
     SELECT *,
-        ROW_NUMBER() OVER (PARTITION BY student_id, [subject] ORDER BY student_id, [subject], exam_date     ASC) as first_score_order
+        ROW_NUMBER() OVER (PARTITION BY student_id, [subject] ORDER BY student_id, [subject], exam_date ASC) as first_score_order
     FROM Scores
 ),
 LatestScores AS (
