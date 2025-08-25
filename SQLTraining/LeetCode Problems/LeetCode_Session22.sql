@@ -34,8 +34,8 @@ INNER JOIN FreeTrialAvgDuration f ON p.user_id = f.user_id
 ORDER BY p.user_id
 
 /*
-3497. Analyze Subscription Conversion (Medium)
-https://leetcode.com/problems/analyze-subscription-conversion/
+3521. Find Product Recommendation Pairs (Medium)
+https://leetcode.com/problems/find-product-recommendation-pairs/
 */
 
 WITH UniqueProductPairs AS (
