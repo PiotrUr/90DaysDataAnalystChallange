@@ -87,7 +87,6 @@ SELECT
     LEAD(rating, 1) OVER (PARTITION BY employee_id ORDER BY review_date DESC) as n_minus_1_rating,
     LEAD(rating, 2) OVER (PARTITION BY employee_id ORDER BY review_date DESC) as n_minus_2_rating
 FROM performance_reviews
-
 )
 SELECT
     r.employee_id,
